@@ -1,0 +1,11 @@
+version: '3.1'
+
+services:
+  frontendserver:
+    build: ./frontendserver/
+    container_name: frontendserver
+    image: frontendserver
+    ports:
+      - 8080:8080
+    volumes:
+      - "./frontendserver/client/src/:/usr/src/app/src/"
