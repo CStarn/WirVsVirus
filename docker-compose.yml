@@ -28,8 +28,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: mongopw
-    volumes:
-      - "./mongodb/:/data/db/"
+      MONGO_SAVE_PATH: "./mongodb/"
 
   mongo-express:
     image: mongo-express:0.49
