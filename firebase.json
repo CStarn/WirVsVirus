@@ -1,2 +1,5 @@
 {
+  "functions": {
+    "source": "./functions"
+  }
 }
