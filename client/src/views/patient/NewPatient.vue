@@ -3,30 +3,42 @@
         <v-text-field
                 label="Firstname"
                 outlined
-                v-model="this.firstname"
+                v-model="firstname"
         ></v-text-field>
         <v-text-field
                 label="Lastname"
                 outlined
-                v-model="this.lastname"
+                v-model="lastname"
         ></v-text-field>
         <v-text-field
                 label="Telephone Number"
                 outlined
-                v-model="this.telNumber"
+                v-model="telNumber"
         ></v-text-field>
-        <v-btn color="succes" @click="submit()"></v-btn>
+        <v-btn color="success"
+               @click="submit()"
+               :loading="loading"
+        >Submit
+        </v-btn>
     </v-form>
 </template>
 
 <script>
     export default {
         name: "NewPatient",
+
         data: () => ({
             firstname: "John",
             lastname: "Johnson",
             telNumber: "016540654545"
         }),
+
+        computed: {
+            loading() {
+                return this.$store.getters.loading;
+            },
+        },
+
         methods: {
             submit() {
                 this.$store.dispatch("addPatient",
@@ -35,9 +47,8 @@
                         lastname: this.lastname,
                         telNumber: this.telNumber
                     });
-            }
+            },
         }
-
     }
 </script>
 

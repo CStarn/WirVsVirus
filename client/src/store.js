@@ -8,24 +8,32 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        loading: false
+        loading: false,
+        patients: [{number: "3283823", name: "Paul Schaaf"}]
     },
-    mutations: {},
+
+    mutations: {
+        setLoading(state, payload) {
+            state.loading = payload;
+        },
+    },
+
     actions: {
-        // eslint-disable-next-line no-unused-vars
-        addPatient( { commit } , payload) {
+        addPatient({commit}, payload) {
+            commit("setLoading", true);
             const newPatient = {
                 firstname: payload.firstname,
                 lastname: payload.lastname,
                 telNumber: payload.telNumber
             };
-            // eslint-disable-next-line no-console
-            console.log(newPatient);
             firebase.firestore().collection(config.patientCollection)
                 .add(newPatient)
-                // eslint-disable-next-line no-console
-                .catch(err => console.log(err));
-        }
+            commit("setLoading", false);
+        },
     },
-    getters: {}
+    getters: {
+        patients: state => state.patients,
+        loading: state => state.loading,
+        error: state => state.error,
+    }
 });
