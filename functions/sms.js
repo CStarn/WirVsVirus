@@ -9,6 +9,7 @@ const app = express();
  * A call at the URL /sms/postpone/ sends an "appointment postponed" message, and expects the parameters
  *      - 'to' with the recipient phone number
  *        (formatted according to E.164: [+][country code][phone number including area code])
+ *        <--> without! the +
  *      - 'name' with the name of the patient
  *      - 'time' with the new instant of the appointment in unix time in milliseconds.
  */
@@ -53,7 +54,7 @@ function postponeSMSUnchecked(to, name, time) {
     const message = `${name}, Ihr Termin wurde verschoben. Neue Uhrzeit: ${clock} (${relative})`;
 
     //call api
-    //todo
+    twilioAPICall(message, to);
 
     //return json message contents for validation of the data sent to the api at this point
     return {
