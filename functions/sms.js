@@ -82,12 +82,12 @@ app.get("/notify", (req, res) => {
  */
 function twilioAPICall(message, to) {
     to = "whatsapp:" + to;
-    let from = "whatsapp:" + from;
+    let fromWhatsApp = "whatsapp:" + from;
 
     twilio.messages
         .create({
             body: message,
-            from: from,
+            from: fromWhatsApp,
             to: to
         })
         .then(message => console.log("Sent: " + message))
