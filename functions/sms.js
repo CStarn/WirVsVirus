@@ -2,6 +2,7 @@ const functions = require("firebase-functions");
 const moment = require("moment");
 const express = require("express");
 const twilio = require("twilio")(functions.config().twilio.authid, functions.config().twilio.token);
+const from = "+19095314450";
 const app = express();
 
 /**
@@ -80,12 +81,10 @@ app.get("/notify", (req, res) => {
  * @param to the clean phone number to send it to
  */
 function twilioAPICall(message, to) {
-    //send via WhatsApp
-    to = 'whatsapp:' + to;
-
     twilio.messages
         .create({
             body: message,
+            from: from,
             to: to
         })
         .then(message => console.log("Sent: " + message))
