@@ -13,7 +13,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
         
-      - name: npm install 
+      - name: Install packages
+        run: npm install 
       
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
