@@ -83,10 +83,12 @@ function twilioAPICall(message, to) {
 
     const authid = functions.config().twilio.authid;
     const token = functions.config().twilio.token;
-    const client = require("twilio")(authid, token);
     const from = "+19095314450";
 
-    client.messages
+    const twilio = require("twilio");
+    const client = new twilio(authid, token);
+
+    /*client.messages
         .create({
             body: message,
             from: from,
@@ -96,7 +98,14 @@ function twilioAPICall(message, to) {
         .then(message => console.log(message.sid))
         .catch(e => {
             console.log(e);
-        });
+        });*/
+
+
+    client.messages.create({
+        body: 'Hello from Node',
+        to: '+491742102688',
+        from: '+19095314450'
+    }).then((message) => console.log(message.sid));
 }
 
 exports.handler = app;
