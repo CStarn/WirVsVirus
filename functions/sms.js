@@ -88,24 +88,17 @@ function twilioAPICall(message, to) {
     const twilio = require("twilio");
     const client = new twilio(authid, token);
 
-    /*client.messages
+    client.messages
         .create({
             body: message,
             from: from,
-            statusCallback: "https://postb.in/1584820942600-8508752794004",
+            statusCallback: "https://postb.in/b/1584823150027-3751792584080",
             to: to
         })
         .then(message => console.log(message.sid))
         .catch(e => {
             console.log(e);
-        });*/
-
-
-    client.messages.create({
-        body: 'Hello from Node',
-        to: '+491742102688',
-        from: '+19095314450'
-    }).then((message) => console.log(message.sid));
+        });
 }
 
 exports.handler = app;
