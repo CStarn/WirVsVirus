@@ -2,9 +2,8 @@ const functions = require("firebase-functions");
 const url = require('url');
 const from = '+49XXXXXXXXXXX'; //todo insert from telephone number here
 
-exports.test = functions.https.onRequest((req, res) => {
-    res.send("Test successful!");
-});
+const express = require("express");
+const app = express();
 
 /**
  * Parses the SMS API call.
@@ -17,16 +16,15 @@ exports.test = functions.https.onRequest((req, res) => {
  *
  * @type {HttpsFunction}
  */
-exports.sms = functions.https.onRequest((req, res) => {
-    const parsedUrl = url.parse(req.url, true);
-
+app.get("/", (req, res) => {
     //we accept postpone and notify as calls
-    if (parsedUrl.path === "/postpone") {
+    if (req.path === "/postpone") {
 
-    } else if (parsedUrl.path === "/notify") {
+    } else if (req.path === "/notify") {
 
     }
-
     //extract from, to phone number and message content
-    res.send(parsedUrl.query);
+    res.send(req.query);
 });
+
+exports.sms = functions.https.onRequest(app);
