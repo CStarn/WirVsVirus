@@ -9,6 +9,12 @@ const client = new twilio(authid, token);
 const app = express();
 
 /**
+ * URLs for testing purposes:
+ * https://us-central1-wirvsvirus-19373.cloudfunctions.net/sms/update?to=4915111225888&name=Christoph%20Starnecker&time=1584831600000
+ * https://us-central1-wirvsvirus-19373.cloudfunctions.net/sms/notify?to=491742102688&name=Florian%20Schmidt
+ */
+
+/**
  * Parses the SMS API call.
  * A call at the URL /sms/update/ sends an "appointment updated" message, and expects the parameters
  *      - 'to' with the recipient phone number
