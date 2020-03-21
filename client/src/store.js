@@ -10,7 +10,9 @@ const appointmentsRef = db.collection(config.appointmentCollection);
 
 const mutations = {
     STORE_PATIENTS: "STORE_PATIENTS",
+    ADD_PATIENT: "ADD_PATIENT",
     STORE_APPOINTMENTS: "STORE_APPOINTMENTS",
+    ADD_APPOINTMENT: "ADD_APPOINTMENT",
     SET_LOADING: "SET_LOADING"
 };
 
@@ -25,13 +27,19 @@ export default new Vuex.Store({
         appointments: state => state.appointments
     },
     mutations: {
-        [mutations.STORE_PATIENTS](state, patients){
+        [mutations.STORE_PATIENTS](state, patients) {
             state.patients = patients;
         },
-        [mutations.STORE_APPOINTMENTS](state, appointments){
+        [mutations.ADD_APPOINTMENT](state, appointment) {
+            state.appointments.push(appointment);
+        },
+        [mutations.STORE_APPOINTMENTS](state, appointments) {
             state.appointments = appointments;
         },
-        [mutations.SET_LOADING](state, isLoading){
+        [mutations.ADD_APPOINTMENT](state, appointment) {
+            state.appointments.push(appointment);
+        },
+        [mutations.SET_LOADING](state, isLoading) {
             state.loading = isLoading;
         }
     },
@@ -45,24 +53,40 @@ export default new Vuex.Store({
             };
             try {
                 await patientsRef.add(newPatient);
+                commit(mutations.ADD_PATIENT, newPatient)
             } catch (e) {
                 alert(e);
             }
             commit(mutations.SET_LOADING, false);
         },
-        async getPatients(ctx){
+        async addAppoinment({commit}, payload) {
+            commit(mutations.SET_LOADING, true);
+            const newAppointment = {
+                patientId: payload.patientId,
+                doctorId: payload.doctorId,
+                datetime: payload.datetime
+            };
+            try {
+                await appointmentsRef.add(newAppointment);
+                commit(mutations.ADD_PATIENT, newAppointment);
+            } catch (err) {
+                alert(err);
+            }
+            commit(mutations.SET_LOADING, false);
+        },
+        async getPatients(ctx) {
             try {
                 const patientsSnapshot = await patientsRef.get();
-                ctx.commit(mutations.STORE_PATIENTS, patientsSnapshot.docs.map(doc => doc.data()));
-            } catch(err) {
+                ctx.commit(mutations.STORE_PATIENTS, patientsSnapshot.docs.map(doc => ({...doc.data(), id: doc.id})));
+            } catch (err) {
                 alert(err);
             }
         },
-        async getAppointments(ctx){
+        async getAppointments(ctx) {
             try {
                 const appointmentSnapshot = await appointmentsRef.get();
                 ctx.commit(mutations.STORE_APPOINTMENTS, appointmentSnapshot.docs.map(doc => doc.data()));
-            } catch(err) {
+            } catch (err) {
                 alert(err);
             }
         }
