@@ -7,13 +7,43 @@ on:
     branches: [ master ]
     
 jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: |
+          cd ./client
+          npm run build
+
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: client/dist
+
   deploy:
+    name: Deployment
+    needs: build
     runs-on: [ubuntu-latest]
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist
         
-      - name: Install packages
+      - name: Install Dependencies
         run: |
           cd ./functions
           npm install 
@@ -21,7 +51,7 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions
+          args: deploy --only functions, hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: wirvsvirus-19373
