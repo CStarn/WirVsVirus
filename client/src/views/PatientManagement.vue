@@ -1,8 +1,18 @@
 <template>
     <v-container>
-        <v-autocomplete label="Search" class="mt-10" :items="patientWithFullname" item-text="fullname" item-value="id"
-                        v-model="selectePatientId" outlined>
+        <v-autocomplete clearable=true label="Search" class="mt-10" :items="patients"
+                        v-model="selectedPatient" outlined>
+            <template v-slot:selection="{ item }">
+                {{item.firstname+" "+item.lastname}}
+            </template>
+            <template v-slot:item="{ item }">
+                {{item.firstname+" "+item.lastname}}
+            </template>
         </v-autocomplete>
+        <v-container v-if="selectedPatient">
+            <new-appointment-dialog :patient="selectedPatient"></new-appointment-dialog>
+        </v-container>
+        <v-dialog></v-dialog>
         <v-data-table :headers="headers" :items="patients">
             <template
                     v-slot:item.name="{ item }">
@@ -14,6 +24,8 @@
 
 <script>
 
+    import NewAppointmentDialog from "../components/NewAppointmentDialog";
+
     const headers = Object.freeze([
         {text: 'Name', value: 'name', align: 'start'},
         {text: 'Number', value: 'telNumber'},
@@ -21,23 +33,23 @@
 
     export default {
         name: "PatientManagement",
+        components: {
+            NewAppointmentDialog
+        },
         data() {
             return {
                 headers,
-                selectePatientId: ""
+                selectedPatient: null
             }
         },
         computed: {
             patients() {
-                return this.$store.getters["patients"];
-            },
-            patientWithFullname() {
-                return this.$store.getters["patients"].map(patient => ({
-                    ...patient, "fullname": patient.firstname + " " + patient.lastname
-                }));
+                let getter = this.$store.getters["patients"];
+                // eslint-disable-next-line no-console
+                console.log(getter);
+                return getter;
             }
         }
     }
-
 </script>
 

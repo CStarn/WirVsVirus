@@ -59,12 +59,12 @@ export default new Vuex.Store({
             }
             commit(mutations.SET_LOADING, false);
         },
-        async addAppoinment({commit}, payload) {
+        async addAppointment({commit}, payload) {
             commit(mutations.SET_LOADING, true);
             const newAppointment = {
-                patientId: payload.patientId,
-                doctorId: payload.doctorId,
-                datetime: payload.datetime
+                patient: payload.patientId,
+                doctor: payload.doctorId,
+                time: payload.datetime
             };
             try {
                 await appointmentsRef.add(newAppointment);
