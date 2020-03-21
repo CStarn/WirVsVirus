@@ -1,8 +1,6 @@
 const functions = require("firebase-functions");
 const moment = require("moment");
 const express = require("express");
-const twilio = require("twilio")(functions.config().twilio.authid, functions.config().twilio.token);
-const from = "+19095314450";
 const app = express();
 
 /**
@@ -83,14 +81,22 @@ app.get("/notify", (req, res) => {
 function twilioAPICall(message, to) {
     console.log("API call with " + message + ", " + to);
 
-    twilio.messages
+    const authid = functions.config().twilio.authid;
+    const token = functions.config().twilio.token;
+    const client = require("twilio")(authid, token);
+    const from = "+19095314450";
+
+    client.messages
         .create({
             body: message,
             from: from,
             statusCallback: "https://postb.in/1584820942600-8508752794004",
             to: to
         })
-        .then(message => console.log(message.sid));
+        .then(message => console.log(message.sid))
+        .catch(e => {
+            console.log(e);
+        });
 }
 
 exports.handler = app;
