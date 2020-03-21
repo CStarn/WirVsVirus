@@ -17,6 +17,7 @@
     },
     created() {
         this.$store.dispatch("getPatients");
+        this.$store.dispatch("getAppointments");
     }
   };
 </script>
