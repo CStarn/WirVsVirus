@@ -1,6 +1,7 @@
 const functions = require("firebase-functions");
 const moment = require("moment");
 const express = require("express");
+const twilio = require("twilio")(functions.config().twilio.authid, functions.config().twilio.token);
 const app = express();
 
 /**
@@ -46,18 +47,20 @@ function postponeSMSUnchecked(to, name, time) {
     const relative = moment(+time).fromNow();
 
     //convert 'to' to string and concatenate the + for the phone number
-    name = '+' + name;
+    to = '+' + to;
 
     //build sms message
     const message = `${name}, Ihr Termin wurde verschoben. Neue Uhrzeit: ${clock} (${relative})`;
 
-    //return json message contents for validation at this point
+    //call api
+    //todo
+
+    //return json message contents for validation of the data sent to the api at this point
     return {
         "to": to,
         "name": name,
         "time": time,
-        "message": message,
-        "keyTest": functions.config().twilio.authid.substring(0, 4)
+        "message": message
     };
 }
 
@@ -70,8 +73,18 @@ app.get("/notify", (req, res) => {
     res.send(req.query);
 });
 
+/**
+ * Executes the actual SMS twilio API call.
+ * @param message the message to send
+ * @param to the clean phone number to send it to
+ */
 function twilioAPICall(message, to) {
-    //authid and token come from functions.config().twilio.authid/.token as env var in firebase
+    twilio.messages
+        .create({
+            body: message,
+            to: to
+        })
+        .then(message => console.log("Sent: " + message))
 }
 
 exports.handler = app;
