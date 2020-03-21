@@ -15,8 +15,8 @@
     components: {
       Navbar
     },
-    data: () => ({
-      //
-    }),
+    created() {
+        this.$store.dispatch("getPatients");
+    }
   };
 </script>

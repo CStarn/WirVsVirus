@@ -1,5 +1,11 @@
 <template>
-  <v-container>  <v-data-table :headers="headers" :items="patients"></v-data-table>
+  <v-container>
+    <v-data-table :headers="headers" :items="patients">
+      <template
+              v-slot:item.name="{ item }" >
+        {{ item.firstname + " " + item.lastname }}
+      </template>
+    </v-data-table>
   </v-container>
 </template>
 
@@ -7,7 +13,7 @@
 
   const headers = Object.freeze([
     {text: 'Name', value: 'name', align: 'start'},
-    {text: 'Number', value: 'number'},
+    {text: 'Number', value: 'telNumber'},
   ]);
 
   export default {
