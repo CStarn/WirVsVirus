@@ -1,4 +1,3 @@
-const from = '+49XXXXXXXXXXX'; //todo insert from telephone number here
 const moment = require("moment");
 const express = require("express");
 const app = express();
@@ -46,7 +45,7 @@ function postponeSMSUnchecked(to, name, time) {
     //const relative = moment(+time).fromNow(); (unresolved method?)
 
     //build sms message
-    const message = `${name}: Ihr Termin wurde verschoben. Neue Uhrzeit: ${clock}`;
+    const message = `${name}, Ihr Termin wurde verschoben. Neue Uhrzeit: ${clock}`;
 
     //return json message contents for validation at this point
     return {
