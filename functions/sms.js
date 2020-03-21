@@ -10,55 +10,36 @@ const app = express();
  *        (formatted according to E.164: [+][country code][phone number including area code])
  *      - 'name' with the name of the patient
  *      - 'time' with the new instant of the appointment in unix time in milliseconds.
- * Similarly, a call at /sms/notify/ sends an appointment notification message, and expects only the parameters
- *      - 'to' with the recipient phone number (see above).
- *
- * @type {HttpsFunction}
  */
-app.get("/", (req, res) => {
+app.get("/postpone", (req, res) => {
     //we accept postpone and notify as calls
-    if (req.path === "/postpone") {
-        //expected params to and time
-        let to = req.query.to;
-        let name = req.query.name;
-        let time = req.query.time;
+    let to = req.query.to;
+    let name = req.query.name;
+    let time = req.query.time;
 
-        //handle missing params and return 400
-        if (to === undefined || name === undefined || time === undefined) {
-            res.writeHead(400, {'Content-Type' : 'text/plain'});
-            res.write("Bad request: Expected parameters to, name and time.");
-            res.end();
-            return;
-        }
-
-        //send postpone sms (response only for testing at this point)
-        res.send(postponeSMS(to, name, time, res));
-    } else if (req.path === "/notify") {
-
+    //handle missing params and return 400
+    if (to === undefined || name === undefined || time === undefined) {
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.write("Bad request: Expected parameters to, name and time.");
+        res.end();
+        return;
     }
 
-    res.end();
+    //todo do input validation here
+
+    //send response for debugging at this point
+    res.send(postponeSMSUnchecked(to, name, time));
 });
 
-/**
- * Creates and sends the postpone SMS message.
- * @param to cell phone number of recipient
- * @param name name of recipient
- * @param time unix timestamp in milliseconds of new appointment
- * @param res response object of query
- * @returns {{name: *, to: *, time: *, message: string}}
- */
-function postponeSMS(to, name, time, res) {
-    //todo input validation
-    return postponeSMSUnchecked(to, name, time, res);
-}
 
 /**
  * Creates and sends the postpone SMS message without input validation.
- * @see postponeSMS(to, name, time, res)
+ * @param to cell phone number of recipient
+ * @param name name of recipient
+ * @param time unix timestamp in milliseconds of new appointment
  * @returns {{name: *, to: *, time: *, message: string}}
  */
-function postponeSMSUnchecked(to, name, time, res) {
+function postponeSMSUnchecked(to, name, time) {
     //create moment from unix timestamp and extract clock string and relative time
     const parsedTime = moment(+time);
     const clock = parsedTime.format("HH:mm");
@@ -69,11 +50,20 @@ function postponeSMSUnchecked(to, name, time, res) {
 
     //return json message contents for validation at this point
     return {
-        "to" : to,
-        "name" : name,
-        "time" : time,
-        "message" : message
+        "to": to,
+        "name": name,
+        "time": time,
+        "message": message
     };
 }
+
+/**
+ * Similarly, a call at /sms/notify/ sends an appointment notification message, and expects the parameters
+ *      - 'to' with the recipient phone number (see above)
+ *      - 'name' with the recipient name.
+ */
+app.get("/notify", (req, res) => {
+    res.send(req.query);
+});
 
 exports.handler = app;
