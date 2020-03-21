@@ -81,6 +81,9 @@ app.get("/notify", (req, res) => {
  * @param to the clean phone number to send it to
  */
 function twilioAPICall(message, to) {
+    to = "whatsapp:" + to;
+    let from = "whatsapp:" + from;
+
     twilio.messages
         .create({
             body: message,
