@@ -1,17 +1,26 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home";
+import TodaysPatients from "./views/TodaysPatients";
+import PatientManagement from "./views/PatientManagement";
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: "/",
-      name: "home",
-      component: Home
+      path: "/todaysPatients",
+      name: "todaysPatients",
+      component: TodaysPatients
+    },
+    {
+      path: "/patientManagement",
+      name: "patientManagement",
+      component: PatientManagement
+    },
+    {
+      path: "*",
+      component: TodaysPatients
     }
-  ],
-  mode: "history"
+  ]
 })
 
