@@ -60,7 +60,8 @@ function postponeSMSUnchecked(to, name, time) {
         "to": to,
         "name": name,
         "time": time,
-        "message": message
+        "message": message,
+        "executedAt": + new Date()
     };
 }
 
@@ -83,6 +84,11 @@ function twilioAPICall(message, to) {
 
     const authid = functions.config().twilio.authid;
     const token = functions.config().twilio.token;
+
+    //todo only for verification
+    console.log(authid.substring(0, 5));
+    console.log(token.substring(0, 5));
+
     const from = "+19095314450";
 
     const twilio = require("twilio");
