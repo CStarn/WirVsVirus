@@ -44,10 +44,7 @@
         },
         computed: {
             patients() {
-                let getter = this.$store.getters["patients"];
-                // eslint-disable-next-line no-console
-                console.log(getter);
-                return getter;
+                return this.$store.getters["patients"];
             }
         }
     }
