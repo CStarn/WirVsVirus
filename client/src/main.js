@@ -26,4 +26,4 @@ new Vue({
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
   }
-}).$mount('#app')
+}).$mount('#app');
