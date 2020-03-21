@@ -1,3 +1,4 @@
+const functions = require("firebase-functions");
 const moment = require("moment");
 const express = require("express");
 const app = express();
@@ -24,7 +25,7 @@ app.get("/postpone", (req, res) => {
         return;
     }
 
-    //todo do input validation here
+    //input validation (for later)
 
     //send response for debugging at this point
     res.send(postponeSMSUnchecked(to, name, time));
@@ -42,17 +43,21 @@ function postponeSMSUnchecked(to, name, time) {
     //create moment from unix timestamp and extract clock string and relative time
     const parsedTime = moment(+time);
     const clock = parsedTime.format("HH:mm");
-    //const relative = moment(+time).fromNow(); (unresolved method?)
+    const relative = moment(+time).fromNow();
+
+    //convert 'to' to string and concatenate the + for the phone number
+    name = '+' + name;
 
     //build sms message
-    const message = `${name}, Ihr Termin wurde verschoben. Neue Uhrzeit: ${clock}`;
+    const message = `${name}, Ihr Termin wurde verschoben. Neue Uhrzeit: ${clock} (${relative})`;
 
     //return json message contents for validation at this point
     return {
         "to": to,
         "name": name,
         "time": time,
-        "message": message
+        "message": message,
+        "keyTest": functions.config().twilio.authid.substring(0, 4)
     };
 }
 
@@ -64,5 +69,9 @@ function postponeSMSUnchecked(to, name, time) {
 app.get("/notify", (req, res) => {
     res.send(req.query);
 });
+
+function twilioAPICall(message, to) {
+    //authid and token come from functions.config().twilio.authid/.token as env var in firebase
+}
 
 exports.handler = app;
