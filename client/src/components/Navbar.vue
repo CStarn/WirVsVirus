@@ -2,7 +2,7 @@
     <v-app-bar app>
         <v-toolbar-title class="headline text-uppercase font-weight-bold">DiWa</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items v-for="item in this.menu" :key="item.title">
+        <v-toolbar-items v-for="item in menu" :key="item.title">
             <v-btn text :to="item.link">
                 <v-icon left>{{ item.icon }}</v-icon>
                 {{ item.title }}
@@ -18,12 +18,12 @@
                 {
                     title: "Today's Patients",
                     link: "/todaysPatients",
-                    icon: "mid-calendar-today"
+                    icon: "mdi-calendar-today"
                 },
                 {
                     title: "Patients Management",
                     link: "/patientManagement",
-                    icon: "mid-account-multiple"
+                    icon: "mdi-account-multiple"
                 }
             ]
         })
