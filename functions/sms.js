@@ -81,16 +81,15 @@ app.get("/notify", (req, res) => {
  * @param to the clean phone number to send it to
  */
 function twilioAPICall(message, to) {
-    to = "whatsapp:" + to;
-    let fromWhatsApp = "whatsapp:" + from;
+    console.log("API call with " + message + ", " + to);
 
     twilio.messages
         .create({
             body: message,
-            from: fromWhatsApp,
+            from: from,
             to: to
         })
-        .then(message => console.log("Sent: " + message))
+        .then(message => console.log(message.sid));
 }
 
 exports.handler = app;
