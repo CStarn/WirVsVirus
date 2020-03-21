@@ -16,7 +16,9 @@ jobs:
         uses: actions/checkout@master
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          cd ./client
+          npm install
 
       - name: Build
         run: |
