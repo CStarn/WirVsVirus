@@ -25,4 +25,4 @@ app.get("/", (req, res) => {
     res.send(req.query);
 });
 
-exports.sms = app;
+exports.handler = app;
