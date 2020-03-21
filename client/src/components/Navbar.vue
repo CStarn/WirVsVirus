@@ -21,7 +21,7 @@
                     icon: "mdi-calendar-today"
                 },
                 {
-                    title: "Patients Management",
+                    title: "Patient Management",
                     link: "/patientManagement",
                     icon: "mdi-account-multiple"
                 }
