@@ -1,3 +1,4 @@
-const sms = require("sms");
+const functions = require("firebase-functions");
+const sms = require("./sms");
 
-exports.sms = sms.sms;
+exports.sms = functions.https.onRequest(sms);

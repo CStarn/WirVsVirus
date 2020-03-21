@@ -1,5 +1,3 @@
-const functions = require("firebase-functions");
-const url = require('url');
 const from = '+49XXXXXXXXXXX'; //todo insert from telephone number here
 
 const express = require("express");
@@ -27,4 +25,4 @@ app.get("/", (req, res) => {
     res.send(req.query);
 });
 
-exports.sms = functions.https.onRequest(app);
+exports.sms = app;
