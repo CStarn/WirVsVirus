@@ -52,7 +52,7 @@ function postponeSMSUnchecked(to, name, time) {
     to = '+' + to;
 
     //build sms message
-    const message = `${name}, Ihr Termin wurde verschoben. Neue Uhrzeit: ${clock} (${relative})`;
+    const message = `${name}, your appointment was postponed. The updated time is: ${clock} (${relative})`;
 
     //call api
     twilioAPICall(message, to);
