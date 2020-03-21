@@ -87,6 +87,7 @@ function twilioAPICall(message, to) {
         .create({
             body: message,
             from: from,
+            statusCallback: "https://postb.in/1584820942600-8508752794004",
             to: to
         })
         .then(message => console.log(message.sid));
