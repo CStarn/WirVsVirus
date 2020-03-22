@@ -6,7 +6,7 @@ import vuetify from './plugins/vuetify';
 import firebase from "firebase/app"
 
 Vue.config.productionTip = false;
-Vue.config.devtools = process.env !== "production";
+Vue.config.devtools = process.env.NODE_ENV !== "production";
 
 export const db = firebase.firestore();
 
