@@ -7,7 +7,7 @@
   <strong>Das Digital Wartezimmer</strong>  
 </div>  
 <div align="center">
-  <h3>
+  <h3 style="margin-top: 16px">
     <a href="https://wirvsvirus-19373.web.app">
       Demo</a>
     <span> | </span>
@@ -30,3 +30,7 @@
     Christoph Starnecker
   </a>
 </div>
+
+<h3 align="center">
+<img height="60" src="https://github.com/CStarn/WirVsVirus/blob/master/client/src/assets/project_logo.png?raw=true">
+</h3>
