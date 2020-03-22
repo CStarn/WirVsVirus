@@ -62,6 +62,16 @@ export default new Vuex.Store({
             }
             commit(mutations.SET_LOADING, false);
         },
+        async editPatient({commit, dispatch}, patient){
+            commit(mutations.SET_LOADING, true);
+            try {
+                await patientsRef.doc(patient.patientId).update(patient.form);
+            } catch (e) {
+                alert(e);
+            }
+            await dispatch('getPatients');
+            commit(mutations.SET_LOADING, false);
+        },
         async addAppointment({commit}, payload) {
             commit(mutations.SET_LOADING, true);
             const newAppointment = {

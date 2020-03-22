@@ -55,13 +55,15 @@
                 </v-icon>
                 </new-appointment-dialog>
 
-                <v-icon
-                        medium
-                        class="mr-1"
-                        @click="editPatient(item)"
-                >
-                    mdi-pencil
-                </v-icon>
+                <edit-patient-dialog :patient="item" v-slot:default="{ on }">
+                    <v-icon
+                            medium
+                            class="mr-1"
+                            v-on="on"
+                    >
+                        mdi-pencil
+                    </v-icon>
+                </edit-patient-dialog>
                 <v-icon
                         medium
                         @click="deletePatient(item)"
@@ -77,6 +79,7 @@
 <script>
     import NewAppointmentDialog from "../components/NewAppointmentDialog";
     import NewPatientDialog from "../components/NewPatientDialog";
+    import EditPatientDialog from "../components/EditPatientDialog";
 
     const headers = Object.freeze([
         {text: 'Name', value: 'name', align: 'start'},
@@ -88,6 +91,7 @@
     export default {
         name: "PatientManagement",
         components: {
+            EditPatientDialog,
             NewPatientDialog,
             NewAppointmentDialog
         },
@@ -116,7 +120,7 @@
             },
             sendAppointmentUpdateMessage(){
 
-            }
+            },
         }
     }
 </script>
