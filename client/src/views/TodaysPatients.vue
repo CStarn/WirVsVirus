@@ -44,11 +44,6 @@
                         collection.push(item);
                     }
                 });
-                // eslint-disable-next-line no-console
-                console.log(map);
-                // eslint-disable-next-line no-console
-                console.log(Array.from(map));
-
                 return map;
             }
         }
