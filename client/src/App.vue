@@ -24,3 +24,9 @@
         }
     };
 </script>
+
+<style>
+    html, body {
+        overflow-y: auto !important;
+    }
+</style>
