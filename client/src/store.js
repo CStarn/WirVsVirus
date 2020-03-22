@@ -2,6 +2,7 @@ import config from "./config"
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { db } from './firebase/firebase';
+import { sendComeInSMS } from "./firebase/api";
 
 Vue.use(Vuex);
 
@@ -92,6 +93,13 @@ export default new Vuex.Store({
                 ctx.commit(mutations.STORE_APPOINTMENTS, appointmentSnapshot.docs.map(doc => doc.data()));
             } catch (err) {
                 alert(err);
+            }
+        },
+        async sendComeInMessage(ctx, payload){
+            try{
+                await sendComeInSMS(payload.telNumber, `${payload.firstname} ${payload.lastname}`)
+            } catch (e) {
+                alert(e);
             }
         }
     },

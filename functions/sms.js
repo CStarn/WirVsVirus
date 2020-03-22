@@ -24,7 +24,7 @@ const app = express();
  *      - 'name' with the name of the patient
  *      - 'time' with the new instant of the appointment in unix time in milliseconds.
  */
-app.get("/update", (req, res) => {
+app.post("/update", (req, res) => {
     //we accept postpone and notify as calls
     let to = req.query.to;
     let name = req.query.name;
@@ -78,7 +78,7 @@ function updateSMSUnchecked(to, name, time) {
  *      - 'to' with the recipient phone number (see above)
  *      - 'name' with the recipient name.
  */
-app.get("/notify", (req, res) => {
+app.post("/notify", (req, res) => {
     //we accept postpone and notify as calls
     let to = req.query.to;
     let name = req.query.name;
