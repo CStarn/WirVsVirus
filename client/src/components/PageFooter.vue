@@ -3,7 +3,9 @@
         <v-container fill-width>
             <v-row justify="center">
                 <v-col cols="3">
-                    <v-img max-width="100%" max-height="100%" src="@/assets/project_logo.png"></v-img>
+                    <div style="display: grid; justify-content: center">
+                    <img height="55px" src="@/assets/project_logo.png">
+                    </div>
                 </v-col>
             </v-row>
         </v-container>
@@ -14,3 +16,13 @@
         name: 'pageFooter'
     }
 </script>
+
+<style scoped>
+    .col-3 {
+        padding: 0 !important;
+    }
+
+    .container {
+        padding: 0 !important;
+    }
+</style>
