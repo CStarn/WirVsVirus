@@ -24,7 +24,8 @@ export default new Vuex.Store({
     },
     getters: {
         patients: state => state.patients,
-        appointments: state => state.appointments
+        appointments: state => state.appointments,
+        loading: state => state.loading
     },
     mutations: {
         [mutations.STORE_PATIENTS](state, patients) {
@@ -49,7 +50,8 @@ export default new Vuex.Store({
             const newPatient = {
                 firstname: payload.firstname,
                 lastname: payload.lastname,
-                telNumber: payload.telNumber
+                telNumber: payload.telNumber,
+                birthday: payload.birthday
             };
             try {
                 await patientsRef.add(newPatient);
