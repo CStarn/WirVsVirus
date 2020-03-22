@@ -1,4 +1,5 @@
 export default  {
     patientCollection: "patients",
-    appointmentCollection: "appointments"
+    appointmentCollection: "appointments",
+    doctors: ["Castro", "Miller"]
 }

@@ -6,10 +6,11 @@
         <v-card>
             <v-card-title>Create Appointment for {{patient.firstname +" "+patient.lastname}}</v-card-title>
             <v-card-text>
-                <v-text-field
+                <v-select
+                        :items="doctors"
                         label="Doctor"
                         v-model="doctor">
-                </v-text-field>
+                </v-select>
                 <v-menu
                         ref="menu"
                         v-model="menu"
@@ -77,6 +78,8 @@
 </template>
 
 <script>
+    import config from "@/config";
+
     export default {
         name: 'NewAppointmentDialog',
         props: ['patient'],
@@ -85,10 +88,11 @@
                 dialog: false,
                 menu: false,
                 menuTime: false,
-                doctor: "",
+                doctor: config.doctors[0],
                 date: new Date().toISOString().slice(0, 10),
                 time: new Date().toISOString().slice(11, 16),
-                notes: ""
+                notes: "",
+                doctors: config.doctors
             }
         },
         computed: {
