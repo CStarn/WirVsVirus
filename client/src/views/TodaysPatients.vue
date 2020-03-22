@@ -2,16 +2,16 @@
   <v-container>
     <v-row>
       <v-col v-for="(appointments, key) in Array.from(groupedAppointments)" :key="key">
-        <v-row>
-          <v-col>
-            <v-card>
-              <v-card-title>
-                {{"Doctor "+ appointments[0]}}
-              </v-card-title>
-            </v-card>
-          </v-col>
-        </v-row>
-        <div class="lighten-1 pa-3 grey round">
+          <v-row>
+            <v-col>
+              <v-card class="secondary lighten-1">
+                <v-card-title style="color: white">
+                  {{"Doctor "+ appointments[0]}}
+                </v-card-title>
+              </v-card>
+            </v-col>
+          </v-row>
+        <div class="lighten-2 pa-3 grey round">
           <v-row v-for="appointment in appointments[1]" :key="appointment.id">
             <v-col>
               <patient-card :appointment="appointment"/>
