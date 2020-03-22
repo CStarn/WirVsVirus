@@ -34,3 +34,14 @@
     Christoph Starnecker  
   </a>  
 </div>
+
+## Demo Info
+
+The demo uses a live firebase database in the cloud and changes made in the frontend are persisted there. Please use the demo responsibly.
+
+### What you can and cannot do in the demo
+
+After taking the repo live, we disabled all SMS sending functionality for non-contributors to avoid running into
+unexpected costs. 
+
+You can add patients and edit them, but not delete them. You can create appointments for patients.
