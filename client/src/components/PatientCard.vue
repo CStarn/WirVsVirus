@@ -2,15 +2,17 @@
   <v-card>
     <v-row align="center">
 
-      <v-col class="align-center" cols="1">
-        <v-checkbox v-model="selected"></v-checkbox>
+      <v-col cols="1" style="display: grid; align-content: center">
+        <v-checkbox :value="checkboxValue" @change="selectCheckbox" color="primary" class="mx-0 ml-6 mb-1"></v-checkbox>
       </v-col>
 
       <v-col  cols="11">
         <v-card-title>
           <v-row justify="space-between">
             <v-col cols="9" class="pt-0">
+              <div style="display: grid; align-content: center; height: 100%">
               {{ appointment.patientFirstName +' '+ appointment.patientLastName}}
+              </div>
             </v-col>
             <v-col class="pt-0 text-right" cols="3">
               {{ appointment.time | formatTime }}
@@ -20,10 +22,6 @@
             </v-col>
           </v-row>
         </v-card-title>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn small color="error">Notify</v-btn>
-        </v-card-actions>
       </v-col>
 
     </v-row>
@@ -45,7 +43,10 @@
                 formatTime
             },
         props: {
-            appointment: {}
+            appointment: {
+              type: Object,
+              required: true
+            }
         },
         computed: {
             difference() {
@@ -55,9 +56,16 @@
             },
             isDelayed() {
                 return this.difference > 0;
+            },
+            checkboxValue() {
+              return this.$store.getters.selectedUpcomingAppointments.includes(this.appointment.id);
             }
         },
-        methods: {}
+        methods: {
+          selectCheckbox(){
+            this.$store.dispatch("selectUpcomingAppointment", this.appointment.id)
+          }
+        }
     }
 </script>
 
@@ -69,4 +77,3 @@
   }
 
 </style>
-

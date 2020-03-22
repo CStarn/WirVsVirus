@@ -16,7 +16,7 @@
         data: () => ({
             "menu": [
                 {
-                    title: "Today's Patients",
+                    title: "Upcoming Appointments",
                     link: "/todaysPatients",
                     icon: "mdi-calendar-today"
                 },
