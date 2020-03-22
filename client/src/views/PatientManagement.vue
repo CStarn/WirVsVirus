@@ -17,14 +17,34 @@
                 </new-patient-dialog>
             </v-card-title>
         <v-data-table :headers="headers" :items="patients" :search="search">
+            <template v-slot:item.telNumber="{ item } ">
+                00{{item.telNumber}}
+            </template>
             <template v-slot:item.actions="{ item }">
-                <v-icon
-                        medium
-                        class="mr-2"
-                        @click="sendMessage(item)"
-                >
-                    mdi-message
-                </v-icon>
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on }">
+                        <v-icon
+                                medium
+                                class="mr-2"
+                                v-on="on"
+                        >
+                            mdi-message
+                        </v-icon>
+                    </template>
+                    <v-list>
+                        <v-list-item
+                                @click="sendComeInMessage(item)"
+                        >
+                            <v-list-item-title>Send "Come In" Message</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item
+                                @click="sendAppointmentUpdateMessage"
+                        >
+                            <v-list-item-title>Send "New Appointment Time" Message</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+
                 <new-appointment-dialog :patient="item" v-slot:default="{ on }">
                     <v-icon
                         medium
@@ -88,6 +108,14 @@
                         }
                         )
                     );
+            }
+        },
+        methods: {
+            sendComeInMessage(patient){
+                this.$store.dispatch("sendComeInMessage", patient);
+            },
+            sendAppointmentUpdateMessage(){
+
             }
         }
     }
