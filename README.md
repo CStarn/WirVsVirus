@@ -4,7 +4,7 @@
   💁‍♂️💁‍♀️
 </div>  
 <div align="center">  
-  <strong>Das Digital Wartezimmer</strong>  
+  <strong>Das Digitale Wartezimmer</strong>  
 </div>  
 <div align="center">
   <h3 style="margin-top:100px">
