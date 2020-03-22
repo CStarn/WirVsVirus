@@ -15,7 +15,7 @@
                         hide-details
                 ></v-text-field>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" dark class="mb-2" v-on="on">New Patient</v-btn>
+                <v-btn color="primary" dark class="mb-2">New Patient</v-btn>
             </v-card-title>
         <v-data-table :headers="headers" :items="patients" :search="search">
             <template v-slot:item.actions="{ item }">
@@ -26,13 +26,16 @@
                 >
                     mdi-message
                 </v-icon>
-                <v-icon
+                <new-appointment-dialog :patient="item" v-slot:default="{ on }">
+                    <v-icon
                         medium
                         class="mr-2"
-                        @click="createAppointment(item)"
+                        v-on="on"
                 >
                     mdi-calendar
                 </v-icon>
+                </new-appointment-dialog>
+
                 <v-icon
                         medium
                         class="mr-1"

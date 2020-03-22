@@ -37,7 +37,7 @@ export default new Vuex.Store({
         [mutations.STORE_APPOINTMENTS](state, appointments) {
             state.appointments = appointments;
         },
-        [mutations.ADD_APPOINTMENT](state, appointment) {
+        [mutations.ADD_PATIENT](state, appointment) {
             state.appointments.push(appointment);
         },
         [mutations.SET_LOADING](state, isLoading) {
@@ -64,13 +64,15 @@ export default new Vuex.Store({
         async addAppointment({commit}, payload) {
             commit(mutations.SET_LOADING, true);
             const newAppointment = {
-                patient: payload.patientId,
+                patient: "/patients/" + payload.patientId,
                 doctor: payload.doctorId,
-                time: payload.datetime
+                time: payload.datetime,
+                patientFirstName: payload.patientFirstName,
+                patientLastName: payload.patientLastName
             };
             try {
                 await appointmentsRef.add(newAppointment);
-                commit(mutations.ADD_PATIENT, newAppointment);
+                commit(mutations.ADD_APPOINTMENT, newAppointment);
             } catch (err) {
                 alert(err);
             }
