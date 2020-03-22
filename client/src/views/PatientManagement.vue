@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-card class="mt-6">
+        <v-card class="mt-2">
             <v-card-title>
                 Patient Management
                 <v-spacer></v-spacer>
