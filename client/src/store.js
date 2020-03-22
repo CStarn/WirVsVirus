@@ -17,7 +17,8 @@ const mutations = {
     SET_LOADING: "SET_LOADING",
     UNSELECT_UPCOMING_APPOINTMENT: "UNSELECT_UPCOMING_APPOINTMENT",
     SELECT_UPCOMING_APPOINTMENT: "SELECT_UPCOMING_APPOINTMENT",
-    UNSELECT_ALL_UPCOMING_APPOINTMENTS: "UNSELECT_ALL_UPCOMING_APPOINTMENTS"
+    UNSELECT_ALL_UPCOMING_APPOINTMENTS: "UNSELECT_ALL_UPCOMING_APPOINTMENTS",
+    ARCHIVE_APPOINTMENT: "ARCHIVE_APPOINTMENT"
 };
 
 export default new Vuex.Store({
@@ -31,7 +32,7 @@ export default new Vuex.Store({
         patients: state => state.patients,
         appointments: state => state.appointments,
         loading: state => state.loading,
-        selectedUpcomingAppointments: state => state.selectedUpcomingAppointments
+        selectedUpcomingAppointments: state => state.selectedUpcomingAppointments,
     },
     mutations: {
         [mutations.STORE_PATIENTS](state, patients) {
@@ -58,7 +59,9 @@ export default new Vuex.Store({
         [mutations.UNSELECT_ALL_UPCOMING_APPOINTMENTS](state) {
             state.selectedUpcomingAppointments = [];
         },
-
+        [mutations.ARCHIVE_APPOINTMENT](state, id){
+            state.appointments = state.appointments.filter(app => app.id !== id);
+        }
     },
     actions: {
         async addPatient({commit}, payload) {
@@ -135,6 +138,9 @@ export default new Vuex.Store({
         },
         unselectAllUpcomingAppointments(ctx){
             ctx.commit(mutations.UNSELECT_ALL_UPCOMING_APPOINTMENTS);
+        },
+        archiveAppointment(ctx, id){
+            ctx.commit(mutations.ARCHIVE_APPOINTMENT, id);
         }
     },
 });

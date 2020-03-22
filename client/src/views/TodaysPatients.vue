@@ -15,7 +15,7 @@
           <v-col>
               <v-btn color="primary" dark class="mb-2" @click="unselectAllCheckboxes">Send New Appointment Time</v-btn>
               <v-spacer></v-spacer>
-              <v-btn color="primary" dark class="mb-2">Archive Appointment</v-btn>
+              <v-btn color="primary" dark class="mb-2" @click="archiveAppointments">Archive Appointment</v-btn>
           </v-col>
         </v-row>
         <div class="lighten-2 pa-3 grey round">
@@ -39,6 +39,9 @@
         computed: {
             groupedAppointments() {
                 return this.groupBy(this.$store.getters["appointments"], app => app.doctor);
+            },
+            selectedUpcomingAppointments(){
+              return this.$store.getters.selectedUpcomingAppointments;
             }
         },
         methods: {
@@ -57,6 +60,10 @@
             },
             unselectAllCheckboxes() {
                this.$store.dispatch("unselectAllUpcomingAppointments") ;
+            },
+            archiveAppointments() {
+              this.selectedUpcomingAppointments.forEach(id => this.$store.dispatch("archiveAppointment", id));
+              this.$store.dispatch("unselectAllUpcomingAppointments");
             }
         }
     }
