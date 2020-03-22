@@ -32,13 +32,13 @@ export default new Vuex.Store({
             state.patients = patients;
         },
         [mutations.ADD_APPOINTMENT](state, appointment) {
-            state.appointments.push(appointment);
+            state.appointments = [...state.appointments, appointment];
         },
         [mutations.STORE_APPOINTMENTS](state, appointments) {
             state.appointments = appointments;
         },
-        [mutations.ADD_PATIENT](state, appointment) {
-            state.appointments.push(appointment);
+        [mutations.ADD_PATIENT](state, patient) {
+            state.patients = [...state.patients, patient];
         },
         [mutations.SET_LOADING](state, isLoading) {
             state.loading = isLoading;
@@ -48,8 +48,8 @@ export default new Vuex.Store({
         async addPatient({commit}, payload) {
             commit(mutations.SET_LOADING, true);
             const newPatient = {
-                firstname: payload.firstname,
-                lastname: payload.lastname,
+                firstname: payload.firstName,
+                lastname: payload.lastName,
                 telNumber: payload.telNumber,
                 birthday: payload.birthday
             };
