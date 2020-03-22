@@ -35,7 +35,7 @@
                 </v-icon>
                 <v-icon
                         medium
-                        class="mr-2"
+                        class="mr-1"
                         @click="editPatient(item)"
                 >
                     mdi-pencil
