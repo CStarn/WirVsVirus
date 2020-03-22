@@ -1,23 +1,25 @@
 <template>
   <v-container>
-      <v-row>
-        <v-col v-for="(appointments, key) in Array.from(groupedAppointments)" :key="key">
-          <v-row>
-            <v-col>
-              <v-card>
-                <v-card-title>
-                  {{"Doctor "+ appointments[0]}}
-                </v-card-title>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-row v-for="appointment in appointments[1]" :key="appointment.id">
+    <v-row>
+      <v-col v-for="(appointments, key) in Array.from(groupedAppointments)" :key="key">
+        <v-row>
           <v-col>
-            <patient-card :appointment="appointment"/>
+            <v-card>
+              <v-card-title>
+                {{"Doctor "+ appointments[0]}}
+              </v-card-title>
+            </v-card>
           </v-col>
         </v-row>
-        </v-col>
-      </v-row>
+        <div class="lighten-1 pa-3 grey round">
+          <v-row v-for="appointment in appointments[1]" :key="appointment.id">
+            <v-col>
+              <patient-card :appointment="appointment"/>
+            </v-col>
+          </v-row>
+        </div>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -51,6 +53,8 @@
 </script>
 
 <style scoped>
-
+  .round {
+    border-radius: 7px;
+  }
 
 </style>
