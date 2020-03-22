@@ -15,6 +15,11 @@
                 outlined
                 v-model="telNumber"
         ></v-text-field>
+        <v-text-field
+                label="Birthday"
+                outlined
+                v-model="birthday"
+        ></v-text-field>
         <v-btn color="success"
                @click="submit()"
                :loading="loading"
@@ -28,9 +33,10 @@
         name: "NewPatient",
 
         data: () => ({
-            firstname: "John",
-            lastname: "Johnson",
-            telNumber: "016540654545"
+            firstname: "",
+            lastname: "",
+            telNumber: "",
+            birthday: ""
         }),
 
         computed: {
@@ -45,7 +51,8 @@
                     {
                         firstname: this.firstname,
                         lastname: this.lastname,
-                        telNumber: this.telNumber
+                        telNumber: this.telNumber,
+                        birthday: this.birthday
                     });
             },
         }
