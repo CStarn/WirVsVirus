@@ -12,10 +12,12 @@
             </v-col>
           </v-row>
         <v-row>
+          <v-spacer></v-spacer>
           <v-col>
               <v-btn color="primary" dark class="mb-2" @click="unselectAllCheckboxes">Send New Appointment Time</v-btn>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" dark class="mb-2" @click="archiveAppointments">Archive Appointment</v-btn>
+          </v-col>
+          <v-col>
+            <v-btn color="primary" dark class="mb-2" @click="archiveAppointments">Archive Appointment</v-btn>
           </v-col>
         </v-row>
         <div class="lighten-2 pa-3 grey round">
