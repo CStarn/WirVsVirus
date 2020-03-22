@@ -1,0 +1,7 @@
+export default (delay) => {
+    if (delay >= 0) {
+        return "+ " + delay;
+    } else {
+        return "- " + Math.abs(delay);
+    }
+}
