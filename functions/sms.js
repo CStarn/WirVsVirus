@@ -9,9 +9,10 @@ const client = new twilio(authid, token);
 const app = express();
 
 /**
- * URLs for testing purposes:
- * https://us-central1-wirvsvirus-19373.cloudfunctions.net/sms/update?to=4915111225888&name=Christoph%20Starnecker&time=1584831600000
- * https://us-central1-wirvsvirus-19373.cloudfunctions.net/sms/notify?to=491742102688&name=Florian%20Schmidt
+ * Important notice for the recipient ('to') phone numbers:
+ * A request for an SMS message to the phone number +49 123 456 7890
+ * needs to be formatted in the query string to this cloud function as
+ * to=491234567890.
  */
 
 /**
@@ -55,9 +56,6 @@ function updateSMSUnchecked(to, name, time) {
     const parsedTime = moment(+time);
     const clock = parsedTime.format("HH:mm");
     const relative = moment(+time).fromNow();
-
-    //convert 'to' to string and concatenate the + for the phone number
-    to = '+' + to;
 
     //build sms message
     const message = `${name}, your appointment time was updated. The new time is: ${clock} (${relative})`;
@@ -105,9 +103,6 @@ app.get("/notify", (req, res) => {
  * @param name the name of the recipient
  */
 function notifySMSUnchecked(to, name) {
-    //convert 'to' to string and concatenate the + for the phone number
-    to = '+' + to;
-
     //build sms message
     const message = `${name}, your appointment starts now. Please find your way to the practitioner's office.`;
 
@@ -126,9 +121,14 @@ function notifySMSUnchecked(to, name) {
 /**
  * Executes the actual SMS twilio API call.
  * @param message the message to send
- * @param to clean phone number to send it to
+ * @param to clean phone number to send it to in the format 491234567890.
+ *        This function will concatenate the '+' to the front of the phone
+ *        number, as it is required internally by the Twilio API.
  */
 function twilioAPICall(message, to) {
+    //convert 'to' to string and concatenate the + for the phone number
+    to = '+' + to;
+
     console.log("API call with " + message + ", " + to);
 
     client.messages
