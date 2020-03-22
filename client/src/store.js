@@ -118,7 +118,15 @@ export default new Vuex.Store({
         async getAppointments(ctx) {
             try {
                 const appointmentSnapshot = await appointmentsRef.get();
-                ctx.commit(mutations.STORE_APPOINTMENTS, appointmentSnapshot.docs.map(doc => ({...doc.data(), id: doc.id})));
+                ctx.commit(mutations.STORE_APPOINTMENTS, appointmentSnapshot.docs
+                    .map(doc => ({...doc.data(), id: doc.id}))
+                    .sort((a, b) => {
+                        if (a.time === b.time) {
+                            return 0;
+                        }
+                        return new Date(a.time) < new Date(b.time) ? -1 : 1;
+                    })
+                );
             } catch (err) {
                 alert(err);
             }
