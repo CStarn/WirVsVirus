@@ -1,8 +1,5 @@
 <template>
     <v-container>
-        <v-container v-if="selectedPatient">
-            <new-appointment-dialog :patient="selectedPatient"></new-appointment-dialog>
-        </v-container>
         <v-card class="mt-6">
             <v-card-title>
                 Patient Management
@@ -15,7 +12,9 @@
                         hide-details
                 ></v-text-field>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" dark class="mb-2">New Patient</v-btn>
+                <new-patient-dialog v-slot:default="{ on }">
+                    <v-btn color="primary" dark class="mb-2" v-on="on">New Patient</v-btn>
+                </new-patient-dialog>
             </v-card-title>
         <v-data-table :headers="headers" :items="patients" :search="search">
             <template v-slot:item.actions="{ item }">
@@ -57,6 +56,7 @@
 
 <script>
     import NewAppointmentDialog from "../components/NewAppointmentDialog";
+    import NewPatientDialog from "../components/NewPatientDialog";
 
     const headers = Object.freeze([
         {text: 'Name', value: 'name', align: 'start'},
@@ -68,6 +68,7 @@
     export default {
         name: "PatientManagement",
         components: {
+            NewPatientDialog,
             NewAppointmentDialog
         },
         data() {
