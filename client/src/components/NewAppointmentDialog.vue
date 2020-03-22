@@ -1,13 +1,10 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-            <v-btn class="success" v-on="on">
-                <v-icon>mdi-pencil</v-icon>
-                Create Appointment
-            </v-btn>
+            <slot v-bind:on="on"></slot>
         </template>
         <v-card>
-            <v-card-title>Creat Appointment for {{patient.firstname +" "+patient.lastname}}</v-card-title>
+            <v-card-title>Create Appointment for {{patient.firstname +" "+patient.lastname}}</v-card-title>
             <v-card-text>
                 <v-text-field
                         label="Doctor"
@@ -71,8 +68,8 @@
                 </v-textarea>
             </v-card-text>
             <v-card-actions>
+                <v-btn text @click="dialog = false">Cancel</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn text @click="dialog = false">Close</v-btn>
                 <v-btn color="success" @click="onSaveChanges">Save</v-btn>
             </v-card-actions>
         </v-card>
@@ -109,6 +106,8 @@
                 this.dialog = false;
                 this.$store.dispatch('addAppointment', {
                     patientId: this.patient.id,
+                    patientFirstName: this.patient.firstname,
+                    patientLastName: this.patient.lastname,
                     doctorId: this.doctor,
                     datetime: this.submittableDateTime,
                     notes: this.notes
