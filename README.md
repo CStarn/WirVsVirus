@@ -24,7 +24,7 @@
 </div>
 
 <div align="center">
-  <sub>Built with ❤︎ and ☕ by <a href="https://github.com/flodt">Florian Schmidt</a>
+  <sub>Built with ❤︎ and ☕ by <a href="https://github.com/flodt">Florian Schmidt, </a>
   <a href="https://github.com/paul-schaaf">Paul Schaaf</a> and
   <a href="https://github.com/CStarn">
     Christoph Starnecker
