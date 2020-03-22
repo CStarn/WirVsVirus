@@ -5,8 +5,16 @@ const authid = functions.config().twilio.authid;
 const token = functions.config().twilio.token;
 const from = "+19095314450";
 const twilio = require("twilio");
+const cors = require('cors');
 const client = new twilio(authid, token);
 const app = express();
+
+const corsOptions = {
+    origin: 'https://wirvsvirus-19373.web.app',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 
 /**
  * Important notice for the recipient ('to') phone numbers:
