@@ -11,6 +11,13 @@
               </v-card>
             </v-col>
           </v-row>
+        <v-row>
+          <v-col>
+              <v-btn color="primary" dark class="mb-2" @click="unselectAllCheckboxes">Send New Appointment Time</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" dark class="mb-2">Archive Appointment</v-btn>
+          </v-col>
+        </v-row>
         <div class="lighten-2 pa-3 grey round">
           <v-row v-for="appointment in appointments[1]" :key="appointment.id">
             <v-col>
@@ -47,6 +54,9 @@
                     }
                 });
                 return map;
+            },
+            unselectAllCheckboxes() {
+               this.$store.dispatch("unselectAllUpcomingAppointments") ;
             }
         }
     }

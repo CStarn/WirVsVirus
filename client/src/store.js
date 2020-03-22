@@ -14,19 +14,24 @@ const mutations = {
     ADD_PATIENT: "ADD_PATIENT",
     STORE_APPOINTMENTS: "STORE_APPOINTMENTS",
     ADD_APPOINTMENT: "ADD_APPOINTMENT",
-    SET_LOADING: "SET_LOADING"
+    SET_LOADING: "SET_LOADING",
+    UNSELECT_UPCOMING_APPOINTMENT: "UNSELECT_UPCOMING_APPOINTMENT",
+    SELECT_UPCOMING_APPOINTMENT: "SELECT_UPCOMING_APPOINTMENT",
+    UNSELECT_ALL_UPCOMING_APPOINTMENTS: "UNSELECT_ALL_UPCOMING_APPOINTMENTS"
 };
 
 export default new Vuex.Store({
     state: {
         loading: false,
         patients: [],
-        appointments: []
+        appointments: [],
+        selectedUpcomingAppointments: []
     },
     getters: {
         patients: state => state.patients,
         appointments: state => state.appointments,
-        loading: state => state.loading
+        loading: state => state.loading,
+        selectedUpcomingAppointments: state => state.selectedUpcomingAppointments
     },
     mutations: {
         [mutations.STORE_PATIENTS](state, patients) {
@@ -43,7 +48,17 @@ export default new Vuex.Store({
         },
         [mutations.SET_LOADING](state, isLoading) {
             state.loading = isLoading;
-        }
+        },
+        [mutations.UNSELECT_UPCOMING_APPOINTMENT](state, appointmentId) {
+            state.selectedUpcomingAppointments = state.selectedUpcomingAppointments.filter(id => id !== appointmentId);
+        },
+        [mutations.SELECT_UPCOMING_APPOINTMENT](state, id) {
+            state.selectedUpcomingAppointments = [...state.selectedUpcomingAppointments, id];
+        },
+        [mutations.UNSELECT_ALL_UPCOMING_APPOINTMENTS](state) {
+            state.selectedUpcomingAppointments = [];
+        },
+
     },
     actions: {
         async addPatient({commit}, payload) {
@@ -100,7 +115,7 @@ export default new Vuex.Store({
         async getAppointments(ctx) {
             try {
                 const appointmentSnapshot = await appointmentsRef.get();
-                ctx.commit(mutations.STORE_APPOINTMENTS, appointmentSnapshot.docs.map(doc => doc.data()));
+                ctx.commit(mutations.STORE_APPOINTMENTS, appointmentSnapshot.docs.map(doc => ({...doc.data(), id: doc.id})));
             } catch (err) {
                 alert(err);
             }
@@ -111,6 +126,15 @@ export default new Vuex.Store({
             } catch (e) {
                 alert(e);
             }
+        },
+        selectUpcomingAppointment(ctx, appointment){
+            ctx.commit(mutations.SELECT_UPCOMING_APPOINTMENT, appointment);
+        },
+        unselectUpcomingAppointment(ctx, appointmentId){
+            ctx.commit(mutations.UNSELECT_UPCOMING_APPOINTMENT, appointmentId);
+        },
+        unselectAllUpcomingAppointments(ctx){
+            ctx.commit(mutations.UNSELECT_ALL_UPCOMING_APPOINTMENTS);
         }
     },
 });

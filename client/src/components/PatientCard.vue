@@ -3,7 +3,7 @@
     <v-row align="center">
 
       <v-col cols="1" style="display: grid; align-content: center">
-        <v-checkbox v-model="selected" color="primary" class="mx-0 ml-6 mb-1"></v-checkbox>
+        <v-checkbox :value="checkboxValue" @change="selectCheckbox" color="primary" class="mx-0 ml-6 mb-1"></v-checkbox>
       </v-col>
 
       <v-col  cols="11">
@@ -43,7 +43,10 @@
                 formatTime
             },
         props: {
-            appointment: {}
+            appointment: {
+              type: Object,
+              required: true
+            }
         },
         computed: {
             difference() {
@@ -53,9 +56,16 @@
             },
             isDelayed() {
                 return this.difference > 0;
+            },
+            checkboxValue() {
+              return this.$store.getters.selectedUpcomingAppointments.includes(this.appointment.id);
             }
         },
-        methods: {}
+        methods: {
+          selectCheckbox(){
+            this.$store.dispatch("selectUpcomingAppointment", this.appointment.id)
+          }
+        }
     }
 </script>
 
@@ -67,4 +77,3 @@
   }
 
 </style>
-
